@@ -75,7 +75,7 @@ public class EstimateService {
         int distanceInt = (int) Math.floor(distance);
 
         // 距離当たりの料金を算出する
-        int priceForDistance = distanceInt * PRICE_PER_DISTANCE;
+        double priceForDistance = distanceInt * PRICE_PER_DISTANCE;
 
         int boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
                 + getBoxForPackage(dto.getBed(), PackageType.BED)
@@ -83,19 +83,58 @@ public class EstimateService {
                 + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
 
         // 箱に応じてトラックの種類が変わり、それに応じて料金が変わるためトラック料金を算出する。
-        int pricePerTruck = estimateDAO.getPricePerTruck(boxes);
+        double pricePerTruck = estimateDAO.getPricePerTruck(boxes);
 
         // オプションサービスの料金を算出する。
-        int priceForOptionalService = 0;
+        double priceForOptionalService = 0;
 
         if (dto.getWashingMachineInstallation()) {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
 
         //引っ越し月に応じた料金
-        
+        double pricenewmonth = 0;
 
-        return priceForDistance + pricePerTruck + priceForOptionalService;
+        if(dto.getnewmonth().equals("1月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("2月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("3月")){
+            pricenewmonth=1.5;
+        }
+        if(dto.getnewmonth().equals("4月")){
+            pricenewmonth=1.5;
+        }
+        if(dto.getnewmonth().equals("5月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("6月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("7月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("8月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("9月")){
+            pricenewmonth=1.2;
+        }
+        if(dto.getnewmonth().equals("10月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("11月")){
+            pricenewmonth=1;
+        }
+        if(dto.getnewmonth().equals("12月")){
+            pricenewmonth=1;
+        }
+
+        int final_price=(int) Math.floor((priceForDistance + pricePerTruck) * pricenewmonth + priceForOptionalService);
+
+        return final_price;
     }
 
     /**
