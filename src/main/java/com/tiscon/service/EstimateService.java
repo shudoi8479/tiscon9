@@ -92,6 +92,9 @@ public class EstimateService {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
 
+        //引っ越し月に応じた料金
+        
+
         return priceForDistance + pricePerTruck + priceForOptionalService;
     }
 
