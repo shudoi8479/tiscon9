@@ -36,7 +36,7 @@ public class UserOrderForm {
     @NotBlank
     private String newAddress;
 
-    @NotBlank
+    //@NotBlank
     private String newmonth;
 
     @Numeric
