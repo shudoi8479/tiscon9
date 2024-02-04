@@ -20,51 +20,89 @@
     <div class="page-title">
       お見積り情報入力
     </div>
+    <!--
     <ul th:if="${#fields.hasErrors('all')}">
       <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
     </ul>
+    -->
     <div class="col-sm-12">
       <fieldset>
         <div class="sub-title">お客様情報</div>
         <div class="form-group">
           <label for="customerName">氏名</label>
-          <input type="text" id="customerName" name="customerName" th:field="*{customerName}" class="form-control" value="山田太郎"/>
+          <input type="text" id="customerName" name="customerName" th:field="*{customerName}" class="form-control" value="山田太郎" th:classappend="${#fields.hasErrors('customerName')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('customerName')}"
+            th:errors="*{customerName}">
+            customerName error
+          </span>
         </div>
         <div class="form-group">
           <label for="tel">連絡先TEL</label>
-          <input type="tel" id="tel" name="tel" th:field="*{tel}" class="form-control" value="03-1234-5678"/>
+          <input type="tel" id="tel" name="tel" th:field="*{tel}" class="form-control" value="03-1234-5678" th:classappend="${#fields.hasErrors('tel')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('tel')}"
+            th:errors="*{tel}">
+            tel error
+          </span>
         </div>
         <div class="form-group">
           <label for="email">連絡先メールアドレス</label>
-          <input type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com"/>
+          <input type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('email')}"
+            th:errors="*{email}">
+            email error
+          </span>
         </div>
         <div class="sub-title">集荷元・お届け先</div>
         <div class="form-group">
           <label for="oldPrefectureId">集荷元住所（都道府県）</label>
-          <select id="oldPrefectureId" name="oldPrefectureId" class="form-control">
+          <select id="oldPrefectureId" name="oldPrefectureId" class="form-control" th:classappend="${#fields.hasErrors('oldPrefectureId')} ? 'is-invalid'">
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('oldPrefectureId')}"
+            th:errors="*{oldPrefectureId}">
+            oldPrefectureId error
+          </span>
         </div>
         <div class="form-group">
           <label for="oldAddress">集荷元住所（市区町村以下）</label>
           <input type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"
-                 class="form-control" value="新宿区西新宿1-1-1"/>
+                 class="form-control" value="新宿区西新宿1-1-1" th:classappend="${#fields.hasErrors('oldAddress')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('oldAddress')}"
+            th:errors="*{oldAddress}">
+            oldAddress error
+          </span>
         </div>
+        
         <div class="form-group">
           <label for="newPrefectureId">お届け先住所（都道府県）</label>
-          <select id="newPrefectureId" name="newPrefectureId" class="form-control">
+          <select id="newPrefectureId" name="newPrefectureId" class="form-control" th:classappend="${#fields.hasErrors('newPrefectureId')} ? 'is-invalid'">
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{newPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('newPrefectureId')}"
+            th:errors="*{newPrefectureId}">
+            newPrefectureId error
+          </span>
         </div>
         <div class="form-group">
           <label for="newAddress">お届け先住所（市区町村以下）</label>
           <input type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"
-                 value="札幌市南区1"/>
+                 value="札幌市南区1" th:classappend="${#fields.hasErrors('newAddress')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('newAddress')}"
+            th:errors="*{newAddress}">
+            newAddress error
+          </span>
         </div>
 
         <div class="form-group">
           <label for="newmonth">引っ越し月</label>
-          <select id="newmonth" name="newmonth">
+          <select id="newmonth" name="newmonth" class="form-group" th:classappend="${#fields.hasErrors('newmonth')} ? 'is-invalid'">
             <option th:value="1月">1月</option>
             <option th:value="2月">2月</option>
             <option th:value="3月">3月</option>
@@ -77,7 +115,12 @@
             <option th:value="10月">10月</option>
             <option th:value="11月">11月</option>
             <option th:value="12月">12月</option>
-          </select>          
+          </select> 
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('newmonth')}"
+            th:errors="*{newmonth}">
+            newmonth error
+          </span>         
         </div>
         
 
@@ -86,27 +129,52 @@
       <div class="sub-title">お荷物情報</div>
         <div class="form-group">
           <label for="box">段ボールの個数</label>
-          <input type="text" id="box" name="box" th:field="*{box}" class="form-control" value="10"/>
+          <input type="text" id="box" name="box" th:field="*{box}" class="form-control" value="10" th:classappend="${#fields.hasErrors('box')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('box')}"
+            th:errors="*{box}">
+            box error
+          </span>
         </div>
         <div class="form-group">
           <label for="bed">ベッドの個数</label>
-          <input type="text" id="bed" name="bed" th:field="*{bed}" class="form-control" value="3"/>
+          <input type="text" id="bed" name="bed" th:field="*{bed}" class="form-control" value="3" th:classappend="${#fields.hasErrors('bed')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('bed')}"
+            th:errors="*{bed}">
+            bed error
+          </span>
         </div>
         <div class="form-group">
           <label for="bicycle">自転車の個数</label>
-          <input type="text" id="bicycle" name="bicycle" th:field="*{bicycle}" class="form-control" value="1"/>
+          <input type="text" id="bicycle" name="bicycle" th:field="*{bicycle}" class="form-control" value="1" th:classappend="${#fields.hasErrors('bicycle')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('bicycle')}"
+            th:errors="*{bicycle}">
+            bicycle error
+          </span>
         </div>
         <div class="form-group">
           <label for="washingMachine">洗濯機の個数</label>
           <input type="text" id="washingMachine" name="washingMachine" th:field="*{washingMachine}" class="form-control"
-                 value="1"/>
+                 value="1" th:classappend="${#fields.hasErrors('washingMachine')} ? 'is-invalid'"/>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('washingMachine')}"
+            th:errors="*{washingMachine}">
+            washingMachine error
+          </span>
         </div>
         <div class="form-group">
           <label for="washingMachineInstallation">洗濯機の設置工事申し込み</label>
-          <select id="washingMachineInstallation" name="washingMachineInstallation" class="form-control" th:field="*{washingMachineInstallation}">
+          <select id="washingMachineInstallation" name="washingMachineInstallation" class="form-control" th:field="*{washingMachineInstallation}" th:classappend="${#fields.hasErrors('washingMachineInstallation')} ? 'is-invalid'">
             <option th:value="false" th:text="なし">なし</option>
             <option th:value="true" th:text="あり">あり</option>
           </select>
+          <span class="text-danger"
+            th:if="${#fields.hasErrors('washingMachineInstallation')}"
+            th:errors="*{washingMachineInstallation}">
+            washingMachineInstallation error
+          </span>
         </div>
       </fieldset>
       <div class="form-group">
