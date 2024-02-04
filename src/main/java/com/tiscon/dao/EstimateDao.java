@@ -130,9 +130,20 @@ public class EstimateDao {
      */
     public int getPricePerTruck(int boxNum) {
         String sql = "SELECT PRICE FROM TRUCK_CAPACITY WHERE MAX_BOX >= :boxNum ORDER BY PRICE LIMIT 1";
+        int trackNum=0;
+        while(boxNum>200){
+            boxNum = boxNum - 200;
+            trackNum+=1;
+        }
+        SqlParameterSource paramSource = new MapSqlParameterSource("boxNum", 200);
+        SqlParameterSource paramSource2 = new MapSqlParameterSource("boxNum", boxNum);
 
+        return trackNum * parameterJdbcTemplate.queryForObject(sql, paramSource, Integer.class) + parameterJdbcTemplate.queryForObject(sql, paramSource2, Integer.class);
+
+        /**
         SqlParameterSource paramSource = new MapSqlParameterSource("boxNum", boxNum);
         return parameterJdbcTemplate.queryForObject(sql, paramSource, Integer.class);
+        */
     }
 
     /**
